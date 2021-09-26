@@ -1,17 +1,60 @@
-<!Doctype html>
-<html>
-    <head>
-        <title>HTML Cheat Sheet</title>
-    </head>
-    <body>
-        <!--Headings-->
-        <h1>About ME:</h1>
-        
-        <!--Paragraph-->
-        <p>
-            I go to Milpitas High School and am a 11th grader.
-        
-        </p>
-    </body>
-</html>
-    
+<head>
+  <title>Pokemon APi</title>
+</head>
+  <body>
+    <canvas id="chart" width="400" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+async function getData() {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon/pikachu')
+  const data = await response.json();
+  const moves = data.moves
+  const response2 = await fetch(moves[0].move.url)
+  const data2 = await response2.json();
+  console.log(data)
+  var autism = []
+  var sped = []
+  for (move = 0; move < 6; move++) {
+    autism.push(moves[move].move.name)
+    fetch(moves[move].move.url)
+    .then(response => response.json())
+  .then(data => sped.push(data.power));
+}
+console.log(sped)
+
+
+
+
+
+    var ctx = document.getElementById('chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: autism,
+        datasets: [{
+            label: '# of Votes',
+            data: sped,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+});
+}
+getData();
+</script>
+</body>
